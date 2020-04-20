@@ -1,4 +1,7 @@
-#! /bin/bash
+#!/usr/bin/env bash
+
+# -e: stop on first failure -u: exit on first unset var -o: first pipefail
+set -euo pipefail
 
 function usage() {
     echo $0 filename pharovm textlintimage
@@ -23,7 +26,7 @@ echo "Please wait while TextLint processes your file: it can take some time..."
 echo
 
 rm -f textlint.log
-"$pharovm" -headless "$textlintimage" $(pwd)/textlint.st
+"$pharovm" -nodisplay "$textlintimage" $(pwd)/textlint.st
 if [[ ! -e textlint.log ]]; then
     echo Something bad happened!
     exit 1
@@ -31,4 +34,3 @@ else
     cat textlint.log
     exit 0
 fi
-
